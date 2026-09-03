@@ -2,3 +2,11 @@
 # References to it under unity-embedded/ are that proper noun, not a typo.
 [default.extend-words]
 embeded = "embeded"
+
+# Unity serializes its own field names into .controller, .unity, .mat, and .meta
+# files, and `m_EventTreshold` is Unity's spelling in Unity's own format. The
+# asset trees also carry vendored third-party packs whose prose nobody here
+# wrote. Neither is editable, so typos checked 100 files it can never be allowed
+# to fix and failed every push out of this repo at the pre-push stage.
+[files]
+extend-exclude = ["unity/**", "unity-embedded/**"]
