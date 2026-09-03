@@ -33,7 +33,7 @@ namespace ShopBoat
     [RequireComponent(typeof(StandaloneAuthComponent))]
     [RequireComponent(typeof(FuelSupplyComponent))]
     [RequireComponent(typeof(FuelConsumptionComponent))]
-    [RequireComponent(typeof(TailingsReportComponent))]
+    [RequireComponent(typeof(GroundPolluterReportComponent))]
     [RequireComponent(typeof(MovableLinkComponent))]
     [RequireComponent(typeof(VehicleComponent))]
     [RequireComponent(typeof(StoreComponent))]
