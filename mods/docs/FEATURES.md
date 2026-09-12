@@ -36,4 +36,4 @@ axis, vertical integration as the balance lever, and vanilla parity by generatio
 
 ## See also
 
-- [README.md](../README.md), [AGENTS.md](../AGENTS.md), [../../.ward/ward.yaml](../../.ward/ward.yaml).
+- [README.md](../README.md), [AGENTS.md](../AGENTS.md), [../../justfile](../../justfile).

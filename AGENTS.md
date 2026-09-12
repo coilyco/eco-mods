@@ -24,13 +24,13 @@ those operational concerns out of this source repository.
 
 ## Commands
 
-Route development through Ward using the verbs in [`.ward/ward.yaml`](.ward/ward.yaml).
-Use the focused build, lint, format, package, and validation verbs for the mod
-being changed.
+Route development through the [`justfile`](justfile) (`just <verb>`). Use the
+focused build, lint, format, package, and validation verbs for the mod being
+changed.
 
 ## Validation
 
-Run the applicable Ward validation and packaging checks. Preserve Git LFS
+Run the applicable validation and packaging verbs. Preserve Git LFS
 assets and never bypass secret scanning.
 
 ## Safety
@@ -98,4 +98,4 @@ temporary root could be purged.
 
 * [README.md](README.md) - repository orientation.
 * [docs/FEATURES.md](docs/FEATURES.md) - current package and CI inventory.
-* [`.ward/ward.yaml`](.ward/ward.yaml) - allowlisted commands.
+* [`justfile`](justfile) - the dev verbs.

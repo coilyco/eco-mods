@@ -39,4 +39,4 @@ code generation, and conventions.
 - [AGENTS.md](AGENTS.md) - repository boundaries and operating rules.
 - [docs/FEATURES.md](docs/FEATURES.md) - the shipped inventory.
 - [eco-app](https://forgejo.coilysiren.me/coilyco-gaming/eco-app) - the companion service and its server-side mods.
-- [.ward/ward.yaml](.ward/ward.yaml) - catalog metadata only.
+- [justfile](justfile) - the dev verbs.

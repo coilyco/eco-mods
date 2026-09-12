@@ -26,7 +26,7 @@ The `../Eco/` sibling has vendor-provided game source. Background-only. Do not p
 
 ## Commands
 
-Route dev verbs through Ward, which reads [../.ward/ward.yaml](../.ward/ward.yaml).
+Route dev verbs through the [justfile](../justfile) (`just <verb>`).
 
 ```sh
 just build-mods
@@ -64,6 +64,6 @@ Public repo. Link back to the commit (or compare view) in each patch note. Forma
 
 ## See also
 
-- [README.md](README.md), [docs/FEATURES.md](docs/FEATURES.md), [docs/codegen.md](docs/codegen.md), [../.ward/ward.yaml](../.ward/ward.yaml).
+- [README.md](README.md), [docs/FEATURES.md](docs/FEATURES.md), [docs/codegen.md](docs/codegen.md), [../justfile](../justfile).
 
 Cross-reference convention from [coilysiren/agentic-os#59](https://github.com/coilyco-flight-deck/agentic-os/issues/59).

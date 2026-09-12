@@ -19,6 +19,5 @@ Repository-level inventory for `eco-mods`.
 - [README.md](../README.md) - human-facing intro.
 - [AGENTS.md](../AGENTS.md) - operating rules.
 - [justfile](../justfile) - dev verbs.
-- [.ward/ward.yaml](../.ward/ward.yaml) - catalog metadata only.
 - [mods/docs/FEATURES.md](../mods/docs/FEATURES.md) and
   [unity/docs/FEATURES.md](../unity/docs/FEATURES.md) - per-subtree inventories.

@@ -29,6 +29,6 @@ Dev commands are declared in the [../justfile](../justfile). Run them as `just <
 
 - [AGENTS.md](AGENTS.md) - agent-facing operating rules.
 - [docs/FEATURES.md](docs/FEATURES.md) - inventory of what ships today.
-- [../.ward/ward.yaml](../.ward/ward.yaml) - allowlisted commands. Agents route through Ward, not bare `uv` / `python` / `npm` / `cargo` / `dotnet`.
+- [../justfile](../justfile) - the dev verbs. Agents route through `just`, not bare `uv` / `python` / `npm` / `cargo` / `dotnet`.
 
 Cross-reference convention from [coilysiren/agentic-os-kai#313](https://github.com/coilyco-bridge/agentic-os-kai/issues/313).

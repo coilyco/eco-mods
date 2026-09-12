@@ -2,7 +2,7 @@
 """Asset and recipe tooling for eco-mods.
 
 Subcommands mirror what used to live in tasks.py. Ward exposes them through
-the repository command catalog. See ../.ward/ward.yaml.
+the repository command catalog. See ../justfile.
 
 push-asset has moved out of Python entirely: zip-assets is now a Ward helper,
 and the actual upload lives in `coily gaming eco mod push`. This script
