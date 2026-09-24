@@ -5,7 +5,7 @@ description: Eco mods and Unity assets. Triggers - eco-mods
 
 # repo-eco-mods
 
-Repository `coilyco-gaming/eco-mods`. Checkout at `~/projects/coilyco-gaming/eco-mods/` when resident.
+Repository `coilyco/eco-mods`. Checkout at `~/projects/coilyco/eco-mods/` when resident.
 
 - [`README.md`](../../../README.md) - what it is, quickstart, layout.
 - [`AGENTS.md`](../../../AGENTS.md) - agent-facing context for the repo.
