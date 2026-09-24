@@ -115,7 +115,7 @@ jobs:
       - name: Publish ${{ matrix.package }}
         env:
           FORGEJO_PACKAGE_URL: ${{ github.server_url }}
-          FORGEJO_PACKAGE_OWNER: coilyco-gaming
+          FORGEJO_PACKAGE_OWNER: coilyco
           FORGEJO_PACKAGE_USER: coilyco-ops
           FORGEJO_PACKAGE_TOKEN: ${{ secrets.ECO_MOD_PACKAGE_TOKEN }}
           MOD_PACKAGE_DIR: .build/mod-package
