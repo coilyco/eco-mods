@@ -1,0 +1,69 @@
+# Boots this PR's mods with eco-ops main on the pinned Eco server. The harness,
+# modset, and pin live in coilyco/eco-ops mods/scripts/local-boot, one owner.
+# eco-ops is private, so the checkout reads it with ECO_OPS_READ_TOKEN when set.
+name: eco-boot
+
+# Dispatch-only until the eco-boot lane and its Steam egress are live, then
+# UserCode PRs (teable:coilyco/infrastructure#8342).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eco-boot-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  boot:
+    name: Eco server boot
+    runs-on: eco-boot
+    container: node:20-bookworm
+    timeout-minutes: 45
+    steps:
+      - name: Checkout eco-mods
+        uses: actions/checkout@v4
+        with:
+          path: eco-mods
+          persist-credentials: false
+
+      - name: Checkout eco-ops
+        uses: actions/checkout@v4
+        with:
+          repository: coilyco/eco-ops
+          ref: main
+          path: eco-ops
+          token: ${{ secrets.ECO_OPS_READ_TOKEN || github.token }}
+          persist-credentials: false
+
+      - name: Restore the pinned Eco server
+        id: server
+        uses: actions/cache/restore@v4
+        with:
+          path: .eco-server
+          key: eco-server-${{ hashFiles('eco-ops/mods/scripts/local-boot/server-pin.env') }}
+
+      - name: Install boot dependencies
+        run: bash eco-ops/mods/scripts/local-boot/ci-deps.sh
+
+      - name: Fetch the pinned Eco server
+        run: bash eco-ops/mods/scripts/local-boot/fetch-server.sh .eco-server
+
+      - name: Save the pinned Eco server
+        if: ${{ steps.server.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v4
+        with:
+          path: .eco-server
+          key: eco-server-${{ hashFiles('eco-ops/mods/scripts/local-boot/server-pin.env') }}
+
+      - name: Boot
+        run: bash eco-ops/mods/scripts/local-boot/ci.sh eco-mods "$RUNNER_TEMP/eco-run" .eco-server
+
+      - name: Keep the boot log
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: eco-boot-log
+          path: ${{ runner.temp }}/eco-run/boot.log
+          if-no-files-found: ignore
