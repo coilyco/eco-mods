@@ -65,8 +65,7 @@ namespace MinesQuarries
 
     [Serialized]
     [AllowPluginModules(
-        Tags = new[] { "AdvancedUpgrade" },
-        ItemTypes = new[] { typeof(MiningAdvancedUpgradeItem) }
+        ItemTypes = new[] { typeof(MiningAdvancedUpgradeItem), typeof(AdvancedUpgradeItem) }
     )]
     [LocDisplayName("Iron Mine")]
     [LocDescription(
@@ -91,8 +90,7 @@ namespace MinesQuarries
 
     [Serialized]
     [AllowPluginModules(
-        Tags = new[] { "AdvancedUpgrade" },
-        ItemTypes = new[] { typeof(MiningAdvancedUpgradeItem) }
+        ItemTypes = new[] { typeof(MiningAdvancedUpgradeItem), typeof(AdvancedUpgradeItem) }
     )]
     [LocDisplayName("Copper Mine")]
     [LocDescription(
@@ -117,8 +115,7 @@ namespace MinesQuarries
 
     [Serialized]
     [AllowPluginModules(
-        Tags = new[] { "AdvancedUpgrade" },
-        ItemTypes = new[] { typeof(MiningAdvancedUpgradeItem) }
+        ItemTypes = new[] { typeof(MiningAdvancedUpgradeItem), typeof(AdvancedUpgradeItem) }
     )]
     [LocDisplayName("Gold Mine")]
     [LocDescription(
@@ -143,8 +140,7 @@ namespace MinesQuarries
 
     [Serialized]
     [AllowPluginModules(
-        Tags = new[] { "AdvancedUpgrade" },
-        ItemTypes = new[] { typeof(MiningAdvancedUpgradeItem) }
+        ItemTypes = new[] { typeof(MiningAdvancedUpgradeItem), typeof(AdvancedUpgradeItem) }
     )]
     [LocDisplayName("Coal Mine")]
     [LocDescription(
@@ -169,8 +165,7 @@ namespace MinesQuarries
 
     [Serialized]
     [AllowPluginModules(
-        Tags = new[] { "AdvancedUpgrade" },
-        ItemTypes = new[] { typeof(MiningAdvancedUpgradeItem) }
+        ItemTypes = new[] { typeof(MiningAdvancedUpgradeItem), typeof(AdvancedUpgradeItem) }
     )]
     [LocDisplayName("Sulfure Mine")]
     [LocDescription(

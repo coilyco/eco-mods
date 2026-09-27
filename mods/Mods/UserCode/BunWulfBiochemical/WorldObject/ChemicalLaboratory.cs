@@ -86,8 +86,7 @@ namespace BunWulfBioChemical
     [Ecopedia("Work Stations", "Researching", createAsSubPage: true)]
     [Weight(2000)] // Defines how heavy Chemlab is.
     [AllowPluginModules(
-        Tags = new[] { "ModernUpgrade" },
-        ItemTypes = new[] { typeof(BiochemistUpgradeItem) }
+        ItemTypes = new[] { typeof(BiochemistUpgradeItem), typeof(ModernUpgradeItem) }
     )] //noloc
     public partial class ChemicalLaboratoryItem
         : WorldObjectItem<ChemicalLaboratoryObject>,
