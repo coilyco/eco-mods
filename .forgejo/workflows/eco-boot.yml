@@ -3,7 +3,7 @@
 # eco-ops is private, so the checkout reads it with ECO_OPS_READ_TOKEN when set.
 name: eco-boot
 
-# Dispatch-only until the eco-boot lane and its Steam egress are live, then
+# Dispatch-only until Steam egress from the docker runner is verified, then
 # UserCode PRs (teable:coilyco/infrastructure#8342).
 on:
   workflow_dispatch:
@@ -18,7 +18,7 @@ concurrency:
 jobs:
   boot:
     name: Eco server boot
-    runs-on: eco-boot
+    runs-on: docker
     container: node:20-bookworm
     timeout-minutes: 45
     steps:

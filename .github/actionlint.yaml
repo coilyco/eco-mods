@@ -1,7 +1,6 @@
 self-hosted-runner:
   labels:
     - docker
-    - eco-boot
 # .forgejo workflows run on Forgejo runners, so GitHub's runner age rule does not apply.
 paths:
   .forgejo/workflows/**:
