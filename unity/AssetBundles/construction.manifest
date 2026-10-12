@@ -1,0 +1,49 @@
+ManifestFileVersion: 0
+UnityVersion: 2023.2.13f1
+CRC: 2749460860
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9929867837dfe6c848096a4bd9b1f25d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c33e821c30183d08530e50080e17e23d
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 973f79bc7b55c7033d53ee70a19b798c
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 89
+  Script: {instanceID: 0}
+- Class: 104
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 157
+  Script: {instanceID: 0}
+- Class: 196
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Scenes/Construction.unity
+Dependencies: []
