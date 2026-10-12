@@ -12,7 +12,7 @@ Point the Unity Hub at this directory, not at the repository root. `Library/` is
 
 Build a bundle from the Editor with `ModKit > Build Current Bundle`, one scene at a time. Unity manages the `.meta` files, so do not edit them by hand.
 
-`BunWulfConstruction` ships its bundle although no C# under `../mods/` loads it, because a running server advertises every bundle it booted with and clients fetch them at connect. A bundle the server advertises leaves only at a planned stop, and "no mod code loads it" is not evidence enough to remove it (COI-2690, COI-2798).
+`Assets/Scenes/Construction.unity` is unstarted work: 2D icons for a BunWulf Construction Worker skill that no C# under `../mods/` defines, so its build output is not committed. A running server advertises every bundle it booted with and clients fetch them at connect, so removing a shipped bundle from a server is stop, remove the folder, start, never while eco-server runs (COI-2690, COI-2798).
 
 ## Siblings
 
