@@ -12,6 +12,8 @@ Point the Unity Hub at this directory, not at the repository root. `Library/` is
 
 Build a bundle from the Editor with `ModKit > Build Current Bundle`, one scene at a time. Unity manages the `.meta` files, so do not edit them by hand.
 
+`Assets/Scenes/Construction.unity` is unstarted work. It defines a BunWulf Construction Worker skill and its talents, but no C# under `../mods/` loads it, so its build output is not committed and nothing ships to a server. Write the mod code before building its bundle again (COI-2690).
+
 ## Siblings
 
 - `../mods/` - the C# mod source that loads these bundles.
