@@ -1,0 +1,97 @@
+# Repo gate on a hosted runner (public repo). Package publication is not ported, because
+# its Forgejo generic package registry is gone. See docs/mod-packages.md.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  hygiene:
+    name: Root hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - run: bash scripts/ci-root-hygiene.sh
+
+      - name: Alert Sentry on main failure
+        if: ${{ failure() && github.ref == 'refs/heads/main' }}
+        continue-on-error: true
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_CI_DSN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: python3 scripts/alert_sentry.py
+
+  mods:
+    name: mods code path
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - uses: coilyco/agentic-os/actions/setup-ci@df1aee7cf7fd1c36c1eda3523291a76b0cdbbd35
+        with:
+          tools: just uv
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Python syntax
+        run: just python-syntax
+
+      - name: Workflow syntax
+        run: just validate-ci
+
+      - name: Package tooling tests
+        run: just test-mod-packages
+
+      - name: Package tooling lint
+        run: just lint-mod-packages
+
+      - name: Restore and build all mods
+        run: just build-mods
+
+      - name: Alert Sentry on main failure
+        if: ${{ failure() && github.ref == 'refs/heads/main' }}
+        continue-on-error: true
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_CI_DSN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: python3 scripts/alert_sentry.py
+
+  secrets:
+    name: Repo secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: coilyco/agentic-os/actions/setup-ci@df1aee7cf7fd1c36c1eda3523291a76b0cdbbd35
+        with:
+          tools: trufflehog
+
+      - run: bash scripts/ci-trufflehog.sh
+
+      - name: Alert Sentry on main failure
+        if: ${{ failure() && github.ref == 'refs/heads/main' }}
+        continue-on-error: true
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_CI_DSN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: python3 scripts/alert_sentry.py

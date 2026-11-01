@@ -2,21 +2,18 @@
 
 Repository-level inventory for `eco-mods`.
 
-## Forgejo CI (retired)
+## GitHub CI
 
-The pipeline below retired with Forgejo on 2026-11-01 (COI-2931), and no GitHub
-workflow replaces it yet.
-
-- `.forgejo/workflows/ci.yml` ran on pushes to `main`, pull requests, and
-  guarded manual dispatches.
-- The gate covered root hygiene, package-tool tests, the proxy-backed `mods/`
-  C# build, and repo-level secret scanning.
-- Main and manual runs published nine independent, install-ready Forgejo generic
-  packages. Each job fetched only its mod's committed Git LFS runtime assets and
-  failed closed on unmaterialized pointers. See [mod-packages.md](mod-packages.md).
-- `.forgejo/workflows/eco-boot.yml` booted `Mods/UserCode` with coilyco/eco-ops
+- `.github/workflows/ci.yml` runs on pushes to `main`, pull requests, and manual
+  dispatches, on hosted runners (COI-3102).
+- The gate covers root hygiene, package-tool tests, the `mods/` C# build, and
+  repo-level secret scanning.
+- Package publication is not ported. Forgejo published nine independent, install-ready
+  generic packages from main, and GitHub has no generic package registry. See
+  [mod-packages.md](mod-packages.md).
+- `.github/workflows/eco-boot.yml` boots `Mods/UserCode` with coilyco/eco-ops
   main on the pinned Eco server, failing on a compile error or start abort the
-  type-check cannot see. Dispatch-only until Steam egress from the docker runner is verified, then on
+  type-check cannot see. Dispatch-only until a dispatched run is green, then on
   UserCode PRs. The harness lives in eco-ops.
 - Unity build pipelines are intentionally out of scope for this first pass.
 

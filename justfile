@@ -38,7 +38,7 @@ format-mod-packages *ARGS:
 python-syntax *ARGS:
     @uv run --project mods python -m compileall -q mods "$@"
 
-# Parse the Forgejo workflow as YAML.
+# Parse the CI workflow as YAML.
 validate-ci *ARGS:
     @uv run --project mods python mods/scripts/validate_workflow.py "$@"
 

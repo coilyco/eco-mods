@@ -28,7 +28,7 @@ authoring step: CI packages committed bundle outputs and never invokes Unity.
 ## Network and credentials
 
 The retired `mods` job got `FORGEJO_EGRESS_PROXY` from the infrastructure-owned
-runner for the .NET build only. The secret `ECO_MOD_PACKAGE_TOKEN` supplied a
+runner for the .NET build only, and the hosted job needs none. The secret `ECO_MOD_PACKAGE_TOKEN` supplied a
 package-only token to the publish step as `FORGEJO_PACKAGE_TOKEN`.
 
 ## Local commands

@@ -1,8 +1,0 @@
-self-hosted-runner:
-  labels:
-    - docker
-# .forgejo workflows run on Forgejo runners, so GitHub's runner age rule does not apply.
-paths:
-  .forgejo/workflows/**:
-    ignore:
-      - 'the runner of .+ action is too old to run on GitHub Actions'

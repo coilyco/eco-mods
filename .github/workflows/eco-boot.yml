@@ -1,10 +1,7 @@
-# Boots this PR's mods with eco-ops main on the pinned Eco server. The harness,
-# modset, and pin live in coilyco/eco-ops mods/scripts/local-boot, one owner.
-# eco-ops is private, so the checkout reads it with ECO_OPS_READ_TOKEN when set.
+# Boots this PR's mods with eco-ops main on the pinned Eco server. The harness, modset,
+# and pin live in coilyco/eco-ops mods/scripts/local-boot. eco-ops is private: ECO_OPS_READ_TOKEN.
 name: eco-boot
 
-# Dispatch-only until Steam egress from the docker runner is verified, then
-# UserCode PRs (teable:coilyco/infrastructure#8342).
 on:
   workflow_dispatch:
 
@@ -18,23 +15,23 @@ concurrency:
 jobs:
   boot:
     name: Eco server boot
-    runs-on: docker
+    runs-on: ubuntu-latest
     container: node:20-bookworm
     timeout-minutes: 45
     steps:
       - name: Checkout eco-mods
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: eco-mods
           persist-credentials: false
 
       - name: Checkout eco-ops
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: coilyco/eco-ops
           ref: main
           path: eco-ops
-          token: ${{ secrets.ECO_OPS_READ_TOKEN || github.token }}
+          token: ${{ secrets.ECO_OPS_READ_TOKEN }}
           persist-credentials: false
 
       - name: Restore the pinned Eco server
@@ -62,7 +59,7 @@ jobs:
 
       - name: Keep the boot log
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: eco-boot-log
           path: ${{ runner.temp }}/eco-run/boot.log
