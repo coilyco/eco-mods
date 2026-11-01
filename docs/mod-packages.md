@@ -1,39 +1,36 @@
 # Eco mod packages
 
-Forgejo CI published each directory under `mods/Mods/UserCode/` as an independent
-generic package until it retired with Forgejo on 2026-11-01 (COI-2931), and no
-GitHub workflow publishes them yet. The packages were:
-`bunwulf-agricultural`, `bunwulf-biochemical`, `bunwulf-educational`,
-`bunwulf-hardware-co`, `direct-carbon-capture`, `eco-nil`, `mines-quarries`,
-`shop-boat`, and `world-counter`.
+`publish-mods` publishes each directory under `mods/Mods/UserCode/` as a package on
+every push to `main`: `bunwulf-agricultural`, `bunwulf-biochemical`,
+`bunwulf-educational`, `bunwulf-hardware-co`, `direct-carbon-capture`, `eco-nil`,
+`mines-quarries`, `shop-boat`, and `world-counter`. The files are GitHub Release assets
+on a `mods-<first 12 of the source sha>` tag (COI-3122), replacing Forgejo's registry.
 
-Each package version combines the repository version from `mods/pyproject.toml`
-with the source revision. A package holds an install-ready ZIP rooted at
-`Mods/UserCode/<Mod>`, JSON metadata, and a SHA-256 checksum. Re-publishing the
-same revision is idempotent only when the remote files have identical bytes.
+A package version combines the repository version from `mods/pyproject.toml` with the
+source revision. It holds an install-ready ZIP rooted at `Mods/UserCode/<Mod>`, JSON
+metadata, and a SHA-256 sidecar. A re-run skips an asset already present with the same
+bytes and fails on one with different bytes.
 
 ## Git LFS boundary
 
-The repository includes a full Unity project with source art and vendored
-assets in Git LFS, and package jobs do not download it. Each matrix job uses a
-narrow include for its own `mods/Mods/UserCode/<Mod>/**` tree, which
-materializes only the built runtime bundles already copied into the server mod.
+The repository includes a full Unity project with source art and vendored assets in Git
+LFS, and package jobs do not download it. Each matrix job pulls only its own
+`mods/Mods/UserCode/<Mod>/**` tree, which holds the built runtime bundles.
 
-The packager rejects any remaining Git LFS pointer before writing an archive,
-which keeps a successful job from publishing a small text pointer where an Eco
-runtime bundle belongs. Mods without bundles perform the same narrow pull and
-package only their source tree. Unity asset production stays a separate
-authoring step: CI packages committed bundle outputs and never invokes Unity.
+The packager rejects any remaining LFS pointer before writing an archive, so a job never
+publishes a text pointer where an Eco runtime bundle belongs. Unity asset production stays
+a separate authoring step: CI never invokes Unity.
 
-## Network and credentials
+The `git lfs pull` fails until the LFS objects reach GitHub (COI-3080), because the
+GitHub copy holds pointers only. `publish-mods` is red until then, on purpose.
 
-The retired `mods` job got `FORGEJO_EGRESS_PROXY` from the infrastructure-owned
-runner for the .NET build only, and the hosted job needs none. The secret `ECO_MOD_PACKAGE_TOKEN` supplied a
-package-only token to the publish step as `FORGEJO_PACKAGE_TOKEN`.
+## Credentials
+
+The publish step uses the automatic `GITHUB_TOKEN` with `contents: write`, and no other
+secret. The hosted `mods` job needs no egress proxy.
 
 ## Local commands
 
 Set `MOD_NAME`, `MOD_PACKAGE_NAME`, and `MOD_SOURCE_REVISION`, then run `ward
-exec package-mod`. `just test-mod-packages` runs the deterministic archive
-and publishing tests. `just publish-mod` targeted the Forgejo registry, which
-retired on 2026-11-01 (COI-2931).
+exec package-mod`. `just test-mod-packages` runs the archive and publishing tests.
+`just publish-mod` needs `gh`, `GITHUB_TOKEN`, `GITHUB_REPOSITORY` and `GITHUB_SHA`.

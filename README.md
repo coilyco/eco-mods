@@ -25,10 +25,9 @@ README, which is the copy that renders as its mod.io store page.
 
 ## Install and build
 
-Every push to `main` once published nine Forgejo generic packages, each fetching
-only its own Git LFS runtime assets and failing closed on an unmaterialized
-pointer. That retired with Forgejo on 2026-11-01 (COI-2931). Archive layout and
-the LFS boundary are in
+Every push to `main` publishes nine packages as release assets on a `mods-<sha>` tag,
+each fetching only its own Git LFS runtime assets and failing closed on an
+unmaterialized pointer (COI-3122). Archive layout and the LFS boundary are in
 [docs/mod-packages.md](docs/mod-packages.md).
 
 Mods target `Eco.ReferenceAssemblies` 0.13.0-beta. Dev verbs are recipes in the

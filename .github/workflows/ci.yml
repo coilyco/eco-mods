@@ -1,5 +1,5 @@
-# Repo gate on a hosted runner (public repo). Package publication is not ported, because
-# its Forgejo generic package registry is gone. See docs/mod-packages.md.
+# Repo gate on a hosted runner (public repo). Mod publishing is publish-mods.yml.
+# Details: docs/mod-packages.md.
 name: ci
 
 on:

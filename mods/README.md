@@ -15,8 +15,8 @@ handful of specialty hardware items. Standalone mods include
 (weather and moisture mechanics), **MinesQuarries** (infinite but expensive
 mining and quarrying operations, designed around vertical integration),
 **ShopBoat** (a mobile shop world object), and **WorldCounter** (world
-statistics tracking). Forgejo CI published each mod as an independent, install-ready
-generic package until it retired on 2026-11-01 (COI-2931). [The package guide](../docs/mod-packages.md) documents
+statistics tracking). CI publishes each mod as an independent, install-ready
+release asset (COI-3122). [The package guide](../docs/mod-packages.md) documents
 the Git LFS boundary and archive layout.
 
 See also [eco-cycle-prep](https://github.com/coilyco-bridge/eco-cycle-prep) for cycle-prep automation (worldgen rolls, Discord announcements, mod sync). The official modkit lives at [StrangeLoopGames/EcoModKit](https://github.com/StrangeLoopGames/EcoModKit), modding docs are at [docs.play.eco](https://docs.play.eco/) and [wiki.play.eco/en/Modding](https://wiki.play.eco/en/Modding), and other community mods are catalogued on [mod.io](https://mod.io/g/eco).

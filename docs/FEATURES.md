@@ -8,8 +8,8 @@ Repository-level inventory for `eco-mods`.
   dispatches, on hosted runners (COI-3102).
 - The gate covers root hygiene, package-tool tests, the `mods/` C# build, and
   repo-level secret scanning.
-- Package publication is not ported. Forgejo published nine independent, install-ready
-  generic packages from main, and GitHub has no generic package registry. See
+- `.github/workflows/publish-mods.yml` publishes nine independent, install-ready
+  packages from main as release assets on a `mods-<sha>` tag (COI-3122). See
   [mod-packages.md](mod-packages.md).
 - `.github/workflows/eco-boot.yml` boots `Mods/UserCode` with coilyco/eco-ops
   main on the pinned Eco server, failing on a compile error or start abort the
