@@ -1,5 +1,5 @@
 # Boots this PR's mods with eco-ops main on the pinned Eco server. The harness, modset,
-# and pin live in coilyco/eco-ops mods/scripts/local-boot. eco-ops is private: ECO_OPS_READ_TOKEN.
+# and pin live in coilyco/eco-ops mods/scripts/local-boot. eco-ops is private: App token.
 name: eco-boot
 
 on:
@@ -25,13 +25,21 @@ jobs:
           path: eco-mods
           persist-credentials: false
 
+      - name: Mint a coilyco-ops App token for eco-ops
+        id: app
+        uses: coilyco/agentic-os/actions/app-token@0dc318a369ff34254a7187b5b1b85ff9b6580750
+        with:
+          app_id: ${{ secrets.COILYCO_OPS_APP_ID }}
+          private_key_base64: ${{ secrets.COILYCO_OPS_APP_PRIVATE_KEY_BASE64 }}
+          repositories: eco-ops
+
       - name: Checkout eco-ops
         uses: actions/checkout@v6
         with:
           repository: coilyco/eco-ops
           ref: main
           path: eco-ops
-          token: ${{ secrets.ECO_OPS_READ_TOKEN }}
+          token: ${{ steps.app.outputs.token }}
           persist-credentials: false
 
       - name: Restore the pinned Eco server
