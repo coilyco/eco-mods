@@ -21,8 +21,9 @@ The packager rejects any remaining LFS pointer before writing an archive, so a j
 publishes a text pointer where an Eco runtime bundle belongs. Unity asset production stays
 a separate authoring step: CI never invokes Unity.
 
-The `git lfs pull` fails until the LFS objects reach GitHub (COI-3080), because the
-GitHub copy holds pointers only. `publish-mods` is red until then, on purpose.
+The first `publish-mods` run on GitHub (2026-11-01) pulled these trees from GitHub LFS
+and published all nine packages, so the narrow pull works there. LFS content outside
+`mods/Mods/UserCode/<Mod>/**` was not exercised (COI-3080).
 
 ## Credentials
 

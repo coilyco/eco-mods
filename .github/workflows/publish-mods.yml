@@ -1,5 +1,5 @@
 # Packages each mod and publishes its ZIP as a release asset on a mods-<sha> tag (COI-3122).
-# The LFS pull fails until the LFS objects reach GitHub (COI-3080). Details: docs/mod-packages.md.
+# Details, including the LFS boundary: docs/mod-packages.md.
 name: publish-mods
 
 on:
