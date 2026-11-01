@@ -84,7 +84,7 @@ class ModPackagesTest(unittest.TestCase):
                 "abc123",
             )
 
-    def test_publish_mod_uploads_archive_metadata_and_checksum(self) -> None:
+    def _package_dir(self) -> Path:
         package_dir = self.repo_root / "packages"
         package_dir.mkdir()
         record = {
@@ -99,23 +99,91 @@ class ModPackagesTest(unittest.TestCase):
         (package_dir / "manifest.json").write_text(
             json.dumps({"schema": 1, "packages": [record]}), encoding="utf-8"
         )
+        return package_dir
+
+    def test_publish_mod_uploads_archive_metadata_and_checksum(self) -> None:
+        package_dir = self._package_dir()
         uploads: list[str] = []
 
-        with mock.patch.object(
-            mod_packages,
-            "_upload_idempotently",
-            side_effect=lambda _path, url, _authorization: uploads.append(url),
+        with (
+            mock.patch.object(mod_packages, "_ensure_release") as ensure,
+            mock.patch.object(
+                mod_packages,
+                "_upload_idempotently",
+                side_effect=lambda path, _repo, _tag: uploads.append(path.name),
+            ),
         ):
             mod_packages.publish_mod(
-                package_dir,
-                "https://forgejo.example",
-                "coilyco-gaming",
-                "coilyco-ops",
-                "token",
+                package_dir, "coilyco/eco-mods", "mods-abc123", "a" * 40
             )
 
-        self.assertEqual(len(uploads), 3)
-        self.assertTrue(all("/sample-mod/1.2.3%2Babc123/" in url for url in uploads))
+        ensure.assert_called_once_with("coilyco/eco-mods", "mods-abc123", "a" * 40)
+        self.assertEqual(
+            uploads,
+            [
+                "SampleMod-1.2.3.zip",
+                "SampleMod-1.2.3.json",
+                "SampleMod-1.2.3.zip.sha256",
+            ],
+        )
+
+    def test_release_tag_is_the_short_revision(self) -> None:
+        revision = "0123456789abcdef0123456789abcdef01234567"
+        self.assertEqual(mod_packages.release_tag(revision), "mods-0123456789ab")
+
+    def test_upload_skips_matching_asset_and_rejects_different_bytes(self) -> None:
+        archive = self.repo_root / "SampleMod-1.2.3.zip"
+        archive.write_bytes(b"zip")
+        calls: list[tuple[str, ...]] = []
+        remote = [b"zip"]
+
+        def fake_gh_checked(*args: str) -> bytes:
+            calls.append(args)
+            if args[:2] == ("release", "view"):
+                return json.dumps({"assets": [{"name": archive.name}]}).encode()
+            return remote[0]
+
+        with mock.patch.object(
+            mod_packages, "_gh_checked", side_effect=fake_gh_checked
+        ):
+            mod_packages._upload_idempotently(
+                archive, "coilyco/eco-mods", "mods-abc123"
+            )
+            self.assertFalse(any(call[:2] == ("release", "upload") for call in calls))
+
+            remote[0] = b"other"
+            with self.assertRaisesRegex(RuntimeError, "different bytes"):
+                mod_packages._upload_idempotently(
+                    archive, "coilyco/eco-mods", "mods-abc123"
+                )
+
+    def test_upload_sends_a_new_asset(self) -> None:
+        archive = self.repo_root / "SampleMod-1.2.3.zip"
+        archive.write_bytes(b"zip")
+        calls: list[tuple[str, ...]] = []
+
+        def fake_gh_checked(*args: str) -> bytes:
+            calls.append(args)
+            return json.dumps({"assets": []}).encode()
+
+        with mock.patch.object(
+            mod_packages, "_gh_checked", side_effect=fake_gh_checked
+        ):
+            mod_packages._upload_idempotently(
+                archive, "coilyco/eco-mods", "mods-abc123"
+            )
+
+        self.assertEqual(
+            calls[-1],
+            (
+                "release",
+                "upload",
+                "mods-abc123",
+                str(archive),
+                "--repo",
+                "coilyco/eco-mods",
+            ),
+        )
 
 
 if __name__ == "__main__":

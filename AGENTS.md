@@ -35,7 +35,7 @@ assets and never bypass secret scanning.
 
 ## Safety
 
-Package publication retired with Forgejo on 2026-11-01 (COI-2931). Never bypass
+Package publication is release assets on a `mods-<sha>` tag (COI-3122). Never bypass
 secret scanning, and
 preserve Git LFS pointers rather than committing materialized assets.
 
@@ -74,9 +74,8 @@ actor in every action sentence.
 
 ## Release
 
-Canonical work lands on GitHub `main`. The Forgejo CI that published
-independent, install-ready generic packages retired with Forgejo on 2026-11-01
-(COI-2931), and no GitHub workflow replaces it yet.
+Canonical work lands on GitHub `main`. `publish-mods` publishes the independent,
+install-ready packages as release assets on a `mods-<sha>` tag (COI-3122).
 
 ## Checkout residency
 

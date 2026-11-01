@@ -22,7 +22,7 @@ build-mods *ARGS:
 lock-mods *ARGS:
     @uv lock --project mods "$@"
 
-# Test deterministic per-mod packaging and Forgejo publishing.
+# Test deterministic per-mod packaging and release-asset publishing.
 test-mod-packages *ARGS:
     @bash mods/scripts/ward-command.sh test-packages "$@"
 
@@ -50,7 +50,7 @@ secret-scan *ARGS:
 package-mod *ARGS:
     @bash mods/scripts/ward-command.sh package-mod "$@"
 
-# Publish .build/mod-package using the FORGEJO_PACKAGE_* environment.
+# Publish .build/mod-package as GitHub Release assets. Needs gh, GITHUB_TOKEN, GITHUB_REPOSITORY, GITHUB_SHA.
 publish-mod *ARGS:
     @bash mods/scripts/ward-command.sh publish-mod "$@"
 

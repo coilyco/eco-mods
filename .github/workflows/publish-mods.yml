@@ -1,0 +1,76 @@
+# Packages each mod and publishes its ZIP as a release asset on a mods-<sha> tag (COI-3122).
+# The LFS pull fails until the LFS objects reach GitHub (COI-3080). Details: docs/mod-packages.md.
+name: publish-mods
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-mods-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish-mod:
+    name: publish-${{ matrix.package }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - mod: BunWulfAgricultural
+            package: bunwulf-agricultural
+          - mod: BunWulfBiochemical
+            package: bunwulf-biochemical
+          - mod: BunWulfEducational
+            package: bunwulf-educational
+          - mod: BunWulfHardwareCo
+            package: bunwulf-hardware-co
+          - mod: DirectCarbonCapture
+            package: direct-carbon-capture
+          - mod: EcoNil
+            package: eco-nil
+          - mod: MinesQuarries
+            package: mines-quarries
+          - mod: ShopBoat
+            package: shop-boat
+          - mod: WorldCounter
+            package: world-counter
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - uses: coilyco/agentic-os/actions/setup-ci@df1aee7cf7fd1c36c1eda3523291a76b0cdbbd35
+        with:
+          tools: just uv
+
+      - name: Materialize ${{ matrix.mod }} release assets
+        env:
+          MOD_NAME: ${{ matrix.mod }}
+        run: bash scripts/ci-lfs-pull-mod.sh
+
+      - name: Package ${{ matrix.mod }}
+        env:
+          MOD_NAME: ${{ matrix.mod }}
+          MOD_PACKAGE_NAME: ${{ matrix.package }}
+          MOD_SOURCE_REVISION: ${{ github.sha }}
+        run: bash scripts/ci-package-mod.sh
+
+      - name: Publish ${{ matrix.package }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MOD_PACKAGE_DIR: .build/mod-package
+        run: just publish-mod
+
+      - name: Alert Sentry on main failure
+        if: ${{ failure() && github.ref == 'refs/heads/main' }}
+        continue-on-error: true
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_CI_DSN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: python3 scripts/alert_sentry.py
