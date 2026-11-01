@@ -35,8 +35,8 @@ assets and never bypass secret scanning.
 
 ## Safety
 
-Package publication needs `FORGEJO_PACKAGE_TOKEN` with `write:package`, held as
-an Actions secret and never in the tree. Never bypass secret scanning, and
+Package publication retired with Forgejo on 2026-11-01 (COI-2931). Never bypass
+secret scanning, and
 preserve Git LFS pointers rather than committing materialized assets.
 
 ## Cross-repo contracts
@@ -74,8 +74,9 @@ actor in every action sentence.
 
 ## Release
 
-Canonical work lands on Forgejo `main`. CI publishes independent,
-install-ready generic packages from committed sources and materialized assets.
+Canonical work lands on GitHub `main`. The Forgejo CI that published
+independent, install-ready generic packages retired with Forgejo on 2026-11-01
+(COI-2931), and no GitHub workflow replaces it yet.
 
 ## Checkout residency
 

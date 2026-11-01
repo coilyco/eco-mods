@@ -1,7 +1,8 @@
 # Eco mod packages
 
-Forgejo CI builds the server-side C# collection and publishes each directory
-under `mods/Mods/UserCode/` as an independent generic package:
+Forgejo CI published each directory under `mods/Mods/UserCode/` as an independent
+generic package until it retired with Forgejo on 2026-11-01 (COI-2931), and no
+GitHub workflow publishes them yet. The packages were:
 `bunwulf-agricultural`, `bunwulf-biochemical`, `bunwulf-educational`,
 `bunwulf-hardware-co`, `direct-carbon-capture`, `eco-nil`, `mines-quarries`,
 `shop-boat`, and `world-counter`.
@@ -26,15 +27,13 @@ authoring step: CI packages committed bundle outputs and never invokes Unity.
 
 ## Network and credentials
 
-The `mods` job receives `FORGEJO_EGRESS_PROXY` from the infrastructure-owned
-runner and exposes it to NuGet only during the .NET build. Forgejo LFS and
-package traffic stay direct to the internal Forgejo service. The organization
-secret `ECO_MOD_PACKAGE_TOKEN` supplies a package-only token to the publish step
-as `FORGEJO_PACKAGE_TOKEN`, and package creation and tests never receive it.
+The retired `mods` job got `FORGEJO_EGRESS_PROXY` from the infrastructure-owned
+runner for the .NET build only. The secret `ECO_MOD_PACKAGE_TOKEN` supplied a
+package-only token to the publish step as `FORGEJO_PACKAGE_TOKEN`.
 
 ## Local commands
 
 Set `MOD_NAME`, `MOD_PACKAGE_NAME`, and `MOD_SOURCE_REVISION`, then run `ward
 exec package-mod`. `just test-mod-packages` runs the deterministic archive
-and publishing tests. Publishing also needs `FORGEJO_PACKAGE_URL`, `_OWNER`,
-`_USER`, and `_TOKEN` before `just publish-mod`.
+and publishing tests. `just publish-mod` targeted the Forgejo registry, which
+retired on 2026-11-01 (COI-2931).
