@@ -5,7 +5,7 @@ description: Triggers - eco-mods-assets
 
 # repo-eco-mods-assets
 
-`eco-mods-assets` was retired. Its Unity project is now the `unity/` directory of `coilyco-gaming/eco-mods` on Forgejo, which is where this skill lives.
+`eco-mods-assets` was retired. Its Unity project is now the `unity/` directory of `coilyco/eco-mods` on GitHub, which is where this skill lives.
 
 - [`README.md`](../../../README.md) - what it is, quickstart, layout.
 - [`AGENTS.md`](../../../AGENTS.md) - agent-facing operating context for this directory.

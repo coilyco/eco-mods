@@ -25,9 +25,10 @@ README, which is the copy that renders as its mod.io store page.
 
 ## Install and build
 
-Every push to `main` publishes nine Forgejo generic packages, each fetching only
-its own Git LFS runtime assets and failing closed on an unmaterialized pointer.
-Archive layout and the LFS boundary are in
+Every push to `main` once published nine Forgejo generic packages, each fetching
+only its own Git LFS runtime assets and failing closed on an unmaterialized
+pointer. That retired with Forgejo on 2026-11-01 (COI-2931). Archive layout and
+the LFS boundary are in
 [docs/mod-packages.md](docs/mod-packages.md).
 
 Mods target `Eco.ReferenceAssemblies` 0.13.0-beta. Dev verbs are recipes in the
@@ -38,5 +39,5 @@ code generation, and conventions.
 
 - [AGENTS.md](AGENTS.md) - repository boundaries and operating rules.
 - [docs/FEATURES.md](docs/FEATURES.md) - the shipped inventory.
-- [eco-app](https://forgejo.coilysiren.me/coilyco-gaming/eco-app) - the companion service and its server-side mods.
+- [eco-app](https://github.com/coilyco/eco-app) - the companion service and its server-side mods.
 - [justfile](justfile) - the dev verbs.
